@@ -144,7 +144,7 @@ focusterm --disable
 
 ### ⚙️ Notes
 
-- Works in Bash and Zsh
+- Works with Zsh
 - Compatible with tmux, iTerm2, Alacritty, kitty, GNOME Terminal, xterm, and Windows Terminal
 - Doesn't affect scrollback history — it only changes which visible lines scroll
 - Safe to run multiple times — calling `focusterm` repeatedly won't break your session
