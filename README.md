@@ -33,13 +33,14 @@ Keep your terminal prompt comfortably **centered near the middle** instead of gl
 You can install **focusterm** instantly with a single command — no cloning needed.
 
 ### Using `curl`
+
 ```bash
-curl -fsSL https://raw.githubusercontent.com/SamanFekri/focusterm/main/install.sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/SamanFekri/focusterm/main/install.sh)"
 ```
 
 ### Using `wget`
 ```bash
-wget -qO- https://raw.githubusercontent.com/SamanFekri/focusterm/main/install.sh)
+sh -c "$(wget https://raw.githubusercontent.com/SamanFekri/focusterm/main/install.sh -O -)"
 ```
 
 ## ✅ Verify Installation
