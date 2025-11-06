@@ -63,3 +63,4 @@ focusterm() {
   printf '\e[1;%sr' "$n"  # Set scroll region
   printf '\e[H'            # Move cursor to home
 }
+
