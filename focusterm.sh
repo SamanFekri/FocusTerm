@@ -7,7 +7,7 @@
 #   focusterm --enable       → enable focusterm globally
 #   focusterm --disable      → disable focusterm globally
 
-f# --- FOCUSTERM: FIX CURSOR POSITION + SAFE ZSH HOOKS ---
+# --- FOCUSTERM: FIX CURSOR POSITION + SAFE ZSH HOOKS ---
 
 # Replace the scroll-region logic inside focusterm when called without flags:
 #   - top margin = n
