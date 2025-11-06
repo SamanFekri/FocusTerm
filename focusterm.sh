@@ -79,3 +79,29 @@ focusterm() {
   printf '\e[1;%sr' "$n"
   printf '\e[H'
 }
+
+# --- FOCUSTERM AUTO REAPPLY (ZSH INTEGRATION) ---
+if [[ -n "$ZSH_VERSION" ]]; then
+  autoload -Uz add-zsh-hook 2>/dev/null || true
+
+  focusterm_precmd() {
+    if [[ "${FOCUSTERM_ENABLED:-1}" -eq 1 ]]; then
+      focusterm
+    fi
+  }
+  add-zsh-hook precmd focusterm_precmd 2>/dev/null || true
+
+  TRAPWINCH() {
+    if [[ "${FOCUSTERM_ENABLED:-1}" -eq 1 ]]; then
+      focusterm
+    fi
+  }
+
+  function zle-line-init {
+    if [[ "${FOCUSTERM_ENABLED:-1}" -eq 1 ]]; then
+      focusterm
+    fi
+  }
+  zle -N zle-line-init 2>/dev/null || true
+fi
+# --- END FOCUSTERM AUTO REAPPLY ---
