@@ -8,27 +8,31 @@
 #   focusterm --disable      → disable focusterm globally
 
 focusterm() {
-  # Default top margin
+  # Use global defaults if not already set
   if [[ -z "${FOCUSTERM_DEFAULT+x}" ]]; then
-    FOCUSTERM_DEFAULT=13
+    export FOCUSTERM_DEFAULT=13
   fi
-
-  # Initialize enabled state if unset
   if [[ -z "${FOCUSTERM_ENABLED+x}" ]]; then
-    FOCUSTERM_ENABLED=1
+    export FOCUSTERM_ENABLED=1
   fi
 
   case "$1" in
     --reset)
-      printf '\e[r'   # Reset scroll region
-      printf '\e[H'   # Move cursor to home
+      printf '\e[r'
+      printf '\e[H'
       return
       ;;
     --default)
       if [[ -n "$2" && "$2" =~ ^[0-9]+$ && "$2" -ge 1 ]]; then
         export FOCUSTERM_DEFAULT="$2"
-        exec $SHELL
         echo "focusterm: default set to $2" >&2
+        # Update global environment variable permanently
+        if grep -q "FOCUSTERM_DEFAULT=" ~/.zshenv; then
+          sed -i '' "s/^export FOCUSTERM_DEFAULT=.*/export FOCUSTERM_DEFAULT=$2/" ~/.zshenv
+        else
+          echo "export FOCUSTERM_DEFAULT=$2" >> ~/.zshenv
+        fi
+        source ~/.zshrc
       else
         echo "Usage: focusterm --default [n>=1]" >&2
         return 1
@@ -38,13 +42,23 @@ focusterm() {
     --enable)
       export FOCUSTERM_ENABLED=1
       echo "focusterm: enabled" >&2
-      exec $SHELL
+      if grep -q "FOCUSTERM_ENABLED=" ~/.zshenv; then
+        sed -i '' "s/^export FOCUSTERM_ENABLED=.*/export FOCUSTERM_ENABLED=1/" ~/.zshenv
+      else
+        echo "export FOCUSTERM_ENABLED=1" >> ~/.zshenv
+      fi
+      source ~/.zshrc
       return
       ;;
     --disable)
       export FOCUSTERM_ENABLED=0
       echo "focusterm: disabled" >&2
-      exec $SHELL
+      if grep -q "FOCUSTERM_ENABLED=" ~/.zshenv; then
+        sed -i '' "s/^export FOCUSTERM_ENABLED=.*/export FOCUSTERM_ENABLED=0/" ~/.zshenv
+      else
+        echo "export FOCUSTERM_ENABLED=0" >> ~/.zshenv
+      fi
+      source ~/.zshrc
       return
       ;;
   esac
@@ -60,7 +74,6 @@ focusterm() {
     return 1
   fi
 
-  printf '\e[1;%sr' "$n"  # Set scroll region
-  printf '\e[H'            # Move cursor to home
+  printf '\e[1;%sr' "$n"
+  printf '\e[H'
 }
-

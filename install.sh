@@ -5,7 +5,7 @@
 
 set -e
 
-REPO_URL="https://raw.githubusercontent.com/SamanFekri/focusterm/main"
+REPO_URL="https://raw.githubusercontent.com/SamanFekri/focusterm/"
 TARGET_DIR="$HOME/.local/bin"
 TARGET_FILE="$TARGET_DIR/focusterm.sh"
 
@@ -16,7 +16,7 @@ mkdir -p "$TARGET_DIR"
 
 # Download the focusterm script
 echo "⬇️  Downloading focusterm.sh..."
-curl -fsSL "$REPO_URL/focusterm.sh" -o "$TARGET_FILE" || {
+curl -fsSL "$REPO_URL/refs/heads/main/focusterm.sh" -o "$TARGET_FILE" || {
   echo "❌ Failed to download focusterm.sh"
   exit 1
 }
