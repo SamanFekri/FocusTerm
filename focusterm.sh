@@ -58,6 +58,8 @@ focusterm() {
       else
         echo "export FOCUSTERM_ENABLED=0" >> ~/.zshenv
       fi
+      printf '\e[r'
+      printf '\e[H'
       source ~/.zshrc
       return
       ;;

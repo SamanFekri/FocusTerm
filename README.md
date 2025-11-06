@@ -14,7 +14,7 @@ Normally, your terminal scrolls the whole screen, so your prompt always appears 
 
 ## ⚡️ Features
 
-- Works with both **Bash** and **Zsh**
+- Works with **Zsh**
 - Runs **automatically** when you start a new terminal
 - Pure shell — no dependencies or binaries
 - Compatible with tmux, iTerm2, kitty, Alacritty, GNOME Terminal, xterm, Windows Terminal, etc.
@@ -65,8 +65,9 @@ To remove `focusterm` and its auto-start configuration:
 
 ```bash
 rm -f ~/.local/bin/focusterm.sh
-sed -i '/focusterm/d' ~/.bashrc ~/.zshrc
-exec $SHELL
+sed -i '' '/focusterm/d' ~/.zshrc #MacOS
+sed -i '/focusterm/d' ~/.zshrc #Linux
+source ~/.zshrc
 ```
 
 This will:
@@ -114,8 +115,10 @@ Restores full-screen scrolling — your prompt will return to the very bottom of
 |---------|-------------|
 | `focusterm` | Centers prompt using saved default (default = 13) |
 | `focusterm [n]` | Sets scroll region with top margin n |
-| `focusterm --default [n]` | Updates default margin for this session |
-| `focusterm --reset` | Restores normal full-screen scrolling |
+| `focusterm --default [n]` | Updates default margin globally |
+| `focusterm --reset` | Restores normal full-screen scrolling on a session |
+| `focusterm --enable` | Enable focusterm globally |
+| `focusterm --disable` | Disable focusterm globally |
 
 ### 🧩 Example workflow
 ```bash
@@ -130,6 +133,13 @@ focusterm --default 10
 
 # Reset everything to normal
 focusterm --reset
+
+# Enable focusterm globally
+focusterm --enable
+
+# Disable focusterm globally
+focusterm --disable
+
 ```
 
 ### ⚙️ Notes

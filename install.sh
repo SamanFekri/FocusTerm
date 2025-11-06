@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # focusterm automatic installer
 # Author: Saman Fekri
-# Installs focusterm and sets it to auto-run in Bash and Zsh
+# Installs focusterm and sets it to auto-run in Zsh
 
 set -e
 
@@ -23,21 +23,20 @@ curl -fsSL "$REPO_URL/refs/heads/main/focusterm.sh" -o "$TARGET_FILE" || {
 
 chmod +x "$TARGET_FILE"
 
-# Add to shell startup files
-for rc in "$HOME/.bashrc" "$HOME/.zshrc"; do
-  if [[ -f "$rc" ]]; then
-    if ! grep -q 'source ~/.local/bin/focusterm.sh' "$rc"; then
-      echo "" >> "$rc"
-      echo "# focusterm (auto-installed)" >> "$rc"
-      echo 'source ~/.local/bin/focusterm.sh' >> "$rc"
-      echo 'focusterm' >> "$rc"
-      echo "✅ Added focusterm to $rc"
-    fi
+# Add to Zsh startup file only
+ZSHRC="$HOME/.zshrc"
+if [[ -f "$ZSHRC" ]]; then
+  if ! grep -q 'source ~/.local/bin/focusterm.sh' "$ZSHRC"; then
+    echo "" >> "$ZSHRC"
+    echo "# focusterm (auto-installed)" >> "$ZSHRC"
+    echo 'source ~/.local/bin/focusterm.sh' >> "$ZSHRC"
+    echo 'focusterm' >> "$ZSHRC"
+    echo "✅ Added focusterm to $ZSHRC"
   fi
-done
+fi
 
 echo ""
 echo "✅ focusterm installed successfully!"
 echo "📍 Location: $TARGET_FILE"
-echo "💡 Restart your terminal or run 'exec \$SHELL' to activate focusterm."
+echo "💡 Restart your terminal or run 'source ~/.zshrc' to activate focusterm."
 echo ""
